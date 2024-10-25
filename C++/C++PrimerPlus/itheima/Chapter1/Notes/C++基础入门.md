@@ -527,12 +527,12 @@ int main() {
 
    ```C++
    int main() {
-
+   
    	char str1[] = "hello world";
    	cout << str1 << endl;
        
    	system("pause");
-
+   
    	return 0;
    }
    ```
@@ -545,17 +545,17 @@ int main() {
 
    ```C++
    int main() {
-
+   
    	string str = "hello world";
    	cout << str << endl;
    	
    	system("pause");
-
+   
    	return 0;
    }
    ```
 
-   ​
+   
 
 > 注意：C++风格字符串，需要加入头文件==#include\<string>==
 
@@ -1097,7 +1097,7 @@ if语句的三种形式
 
 * 多条件的if语句
 
-  ​
+  
 
 1. 单行格式if语句：`if(条件){ 条件满足执行的语句 }`
 
@@ -1107,30 +1107,30 @@ if语句的三种形式
 
    ```C++
    int main() {
-
+   
    	//选择结构-单行if语句
    	//输入一个分数，如果分数大于600分，视为考上一本大学，并在屏幕上打印
-
+   
    	int score = 0;
    	cout << "请输入一个分数：" << endl;
    	cin >> score;
-
+   
    	cout << "您输入的分数为： " << score << endl;
-
+   
    	//if语句
    	//注意事项，在if判断语句后面，不要加分号
    	if (score > 600)
    	{
    		cout << "我考上了一本大学！！！" << endl;
    	}
-
+   
    	system("pause");
-
+   
    	return 0;
    }
    ```
 
-   ​
+   
 
 
 > 注意：if条件表达式后不要加分号
@@ -1145,7 +1145,7 @@ if语句的三种形式
 
 ![img](assets/clip_image002-1541662519170.png)
 
-​
+
 
 示例：
 
@@ -1187,11 +1187,11 @@ int main() {
 
 ![img](assets/clip_image002-1541662566808.png)
 
-​
 
-​
 
-​
+
+
+
 
 示例：
 
@@ -1227,7 +1227,7 @@ int main() {
 }
 ```
 
-​
+
 
 
 
@@ -2730,7 +2730,7 @@ int main() {
 * 内存编号是从0开始记录的，一般用十六进制数字表示
 * 可以利用指针变量保存地址
 
-  ​
+  
 
 ### 7.2 指针变量的定义和使用
 
@@ -2952,11 +2952,126 @@ int main() {
 
 > 技巧：看const右侧紧跟着的是指针还是常量, 是指针就是常量指针，是常量就是指针常量
 
+#### 个人记忆口诀
+
+***个人记忆口诀:const右侧紧跟着的是指针,名字就叫做 常量指针,作用是指针指向可以改，指针指向的值不可以更改***
+
+***个人记忆口诀:const右侧紧跟着的是常量,名字就叫做 指针常量,作用是指针指向不可以改，指针指向的值可以更改***
+
+#### const 变量
+
+const 是 constant 的缩写，本意是不变的，不易改变的意思
+
+**也就是说使用const修饰的变量，其值是不允许改变的**
+
+再了解上面的基础后,我们来看一下什么是**指针常量，常量指针和指向常量的指针**
+
+首先说一下怎么快速的记住他们的区别，只需要**按照命名的顺序来读**，就可以很好地记忆
+
+**就是看const(常量) 和 int *(指针)出现的位置**
+
+比方说：
+
+```c++
+int * const p =&a;
+```
+
+首先是一个指针`int *` , 然后一个`const`常量 **那么p就是`指针常量`**
+
+```c++
+const int *p=&a;
+```
+
+首先是一个`const`常量, 然后一个指针`int *` **那么p就是`常量指针`**
+
+#### 个人记忆背诵口诀
+
+const修饰谁,就管住了谁不能修改
+
+const修饰p,就管住了p指针的指向不能修改
+
+const修饰int *,就管住了目的地内存里面的值不能修改
+
+#### 指针常量
+
+```C++
+int * const p =&a;
+```
+
+
+特点：指针的指向不可以修改，指针指向的内存的值可以修改
+
+因为const的功能就是限定不可以修改，所以我们看到指针常量是先有了int *指针，**再有的const修饰p 所以p的值(指向的内存地址) 是不可以修改的**(p的值,就是p存储单元里面的值,即目的地的地址.p指向的内存的地址,就是p目的地的地址,就是**p指向的方向是不可以修改的**)
+
+也就是const限制的是指针p的值，但是没有限定p指向的内存地址里的数据，所以内存的数据可以修改(因为const没有限制int *)
+
+#### 常量指针
+
+```c++
+const int *p=&a;
+```
+
+特点： 指针的指向可以修改，(因为const没有修饰 p)
+
+但是指针指向的值不可以修改(因为const修饰了int *)。
+
+```c++
+int a=10;
+int b=10;
+const int *p=&a;  //定义常量指针,指向int a的地址
+
+*p = 20; //错误，指向的内存地址中的数据不可以修改   
+
+p=&b;  //正确，指向的内存地址可以修改
+```
+
+#### 指向常量的常指针
+
+```c++
+const int const *p=&a;
+```
+
+特点： 指针的指向不可以修改，指针指向的值也不可以修改。
+
+两个const限制，一旦指向之后就不可以做修改了
+
+```c++
+int a=10;
+int b=10;
+
+const int const *p=&a;  //定义指针常量,指向int a的地址
+
+*p = 20; //错误，指向的内存地址中的数据不可以修改   
+ p=&b;  //错误，指向的内存地址不可以修改
+```
 
 
 
+#### 空指针、野指针
 
+空指针就是指向地址为空的指针
 
+注意：空指针指向的内存是不可以访问的
+
+```c++
+//-------空指针-------//
+int *p4 = NULL;
+//cout << *p4 << endl; //运行Error，使用指针时必须先判断是否空指针
+
+```
+
+野指针是指针指向了一个随意的内存地址，如果使用，会造成不可预知的内存错误
+
+```C++
+//-------野指针（悬浮、迷途指针）-------//
+
+int *p5 =0x1100;  //任意赋值的野指针
+//cout << *p5 << endl; //运行Error
+
+int *p6 = new int(5);
+delete p6;  //删除p6的指向
+p6 = NULL; //一定要有这一步，否则p6会随机的指向一个地址
+```
 
 
 
@@ -3111,9 +3226,9 @@ int main() {
 
 
 
-> 总结：当数组名传入到函数作为参数时，被退化为指向首元素的指针
+> **总结：当数组名传入到函数作为参数时，被退化为指向首元素的指针**
 
-
+个人总结:当数组名传入到函数作为参数的时候,被退化为指向第一个元素的指针
 
 
 
@@ -3420,7 +3535,7 @@ int main() {
 
 > 总结：如果不想修改主函数中的数据，用值传递，反之用地址传递
 
-
+**个人总结:值传递并非不好,合理利用值传递和地址传递的特性有利于自己程序的编写.**
 
 
 
@@ -3462,7 +3577,11 @@ int main() {
 }
 ```
 
+个人总结:注意 这里是const student* stu,
 
+相当于const int* p,也就是const修饰了student* ,管住了stu这个指针指向的目的地内存里面的值不能修改.
+
+个人总结:将函数中的形参改为指针,可以减少内存空间,而且不会复制出新的副本出来.
 
 
 
@@ -3549,7 +3668,57 @@ int main() {
 
 
 
+#### 个人代码:
 
+```C++
+#include <iostream>
+using namespace std;
+
+struct student
+{
+    string name;
+    int score;
+};
+struct teacher
+{
+    string name;
+    student stu[5];
+};
+void fuzhi(teacher *arr)
+{
+    for (int j = 0; j < 3; j++)
+    {
+        cout << "Please enter " << j + 1 << "th teacher`s name" << endl;
+        cin >> arr[j].name;
+        for (int i = 0; i < 5; i++)
+        {
+            cout << "Please enter " << j + 1 << "th teacher`s " << i + 1 << "th student`s name" << endl;
+            cin >> arr[j].stu[i].name;
+            cout << "Please enter " << j + 1 << "th teacher`s " << i + 1 << "th student`s score" << endl;
+            cin >> arr[j].stu[i].score;
+        }
+    }
+}
+void print(teacher *arr)
+{
+    for (int j = 0; j < 3; j++)
+    {
+        cout << j + 1 << "th teacher`s name is " << arr[j].name << endl;
+        for (int i = 0; i < 5; i++)
+        {
+            cout << j + 1 << "th teacher`s " << i + 1 << "th student`s name is" << arr[j].stu[i].name << endl;
+            cout << j + 1 << "th teacher`s " << i + 1 << "th student`s score is" << arr[j].stu[i].score << endl;
+        }
+    }
+}
+int main(void)
+{
+    teacher arr[3];
+    fuzhi(arr);
+    print(arr);
+    return 0;
+}
+```
 
 
 
@@ -3641,6 +3810,49 @@ int main() {
 }
 ```
 
+个人代码:
 
+```c++
+#include <iostream>
+using namespace std;
 
-# 
+struct hero
+{
+    string name;
+    int age;
+    string sex;
+};
+void bubble_sort(hero *arr, int len)
+{
+    for (int i = 0; i < len - 1; i++)
+    {
+        for (int j = 0; j < len - 1 - i; j++)
+        {
+            if (arr[j].age > arr[j + 1].age)
+                swap(arr[j], arr[j + 1]);
+        }
+    }
+}
+void printHero(hero *arr, int len)
+{
+    for (int i = 0; i < len; i++)
+    {
+        cout << arr[i].name << arr[i].age << arr[i].sex << endl;
+    }
+}
+int main(void)
+{
+    hero arr[5] = {
+        {"刘备", 23, "男"},
+        {"关羽", 22, "男"},
+        {"张飞", 20, "男"},
+        {"赵云", 21, "男"},
+        {"貂蝉", 19, "女"}};
+    int len = sizeof(arr) / sizeof(arr[0]);
+    bubble_sort(arr, len);
+    printHero(arr, len);
+    // cout << len << endl;
+    return 0;
+}
+```
+
